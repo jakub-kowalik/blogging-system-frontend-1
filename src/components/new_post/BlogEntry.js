@@ -21,7 +21,7 @@ const BlogEntry = () => {
 
     const addBlogEntry = async (newBlogEntry) => {
         console.log(newBlogEntry)
-        await axios.post('http://localhost:8080/api/blog/redactor/createBlogEntry', newBlogEntry,
+        await axios.post('http://localhost:8081/api/blog/redactor/createBlogEntry', newBlogEntry,
             config
             ).then((response) => {
                 if (response.status === 201) {
