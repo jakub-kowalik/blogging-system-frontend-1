@@ -21,8 +21,8 @@ function Header() {
 
                     {isRedactor() &&
                     <NavDropdown title="Redactor menu" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="/addpost">Add post</NavDropdown.Item>
-                        <NavDropdown.Item href="/myposts">My posts </NavDropdown.Item>
+                        <NavDropdown.Item href="/newblogentry">Add post</NavDropdown.Item>
+                        <NavDropdown.Item href="/myblogentries">My posts </NavDropdown.Item>
                     </NavDropdown>
                     }
                     {isAdmin() &&
