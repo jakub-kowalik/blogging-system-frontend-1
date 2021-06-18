@@ -1,13 +1,7 @@
 import BlogObject from "./BlogObject";
-import {
-    FacebookIcon,
-    FacebookShareButton,
-    LinkedinIcon,
-    LinkedinShareButton,
-    TwitterIcon,
-    TwitterShareButton
-} from "react-share";
-import Comments from "./Comments";
+import Comment from "./Comment";
+import {isUser} from "../../utility/Authorization";
+import Socials from "./Socials";
 
 const BlogEntry = ({entryData, isFrontpage}) => {
 
@@ -66,6 +60,22 @@ const BlogEntry = ({entryData, isFrontpage}) => {
         viewCount: 0
     }
 
+    const sampleComment = [
+        {
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in ipsum quis metus dictum tristique. Curabitur eu laoreet diam. Fusce tincidunt porttitor lorem, ut tincidunt sapien venenatis viverra. Cras pellentesque massa in nunc efficitur porttitor. Donec vitae eros finibus, consectetur mauris eget, sodales leo.",
+            createdDate: "2021-06-18T16:01:08.004Z",
+            id: "string",
+            username: "string"
+        },
+        {
+            content: "string2",
+            createdDate: "2021-06-18T16:01:08.004Z",
+            id: "string2",
+            username: "string2"
+        }
+
+    ]
+
     const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
@@ -77,35 +87,41 @@ const BlogEntry = ({entryData, isFrontpage}) => {
 
     return (
         <>
-        <article className={"text-start px-5 pt-3 pb-5 m-3 bg-info rounded-3"}>
-            <header className="mb-4">
+            <article className={"text-start px-5 pt-3 pb-3 m-3 bg-info rounded-3"}>
+                <header className="mb-4">
 
-                <h1 className="fw-bolder mb-1">Welcome to Blog Post!</h1>
+                    <h1 className="fw-bolder mb-1">Welcome to Blog Post!</h1>
 
-                <div className="text-muted fst-italic mb-2">Posted on <span
-                    title={sampleData.createdDate}>{formatDate(sampleData.createdDate)}</span> by {sampleData.author.username}
+                    <div className="text-muted fst-italic mb-2">Posted on <span
+                        title={sampleData.createdDate}>{formatDate(sampleData.createdDate)}</span> by {sampleData.author.username}
+                    </div>
+                </header>
+                <hr/>
+                <section>
+                    {sampleData.blogObjects
+                        .sort((a, b) => a.positionInBlogEntry > b.positionInBlogEntry ? 1 : -1)
+                        .map(blogObject => (
+                            <BlogObject key={blogObject.positionInBlogEntry} blogObject={blogObject}/>))}
+                </section>
+                <hr/>
+                <div className={"container w-100"}>
+                    <div className={"row"}>
+                        <div className={"col my-auto"}>
+                            {isUser() &&
+                                <button className={"btn btn-dark"}>Comment</button>
+                            }
+                        </div>
+                        <div className={"col my-auto"}>
+                            <span className={"float-end"}>
+                                <Socials shareUrl={shareUrl} />
+                            </span>
+                        </div>
+                    </div>
                 </div>
-            </header>
-            <section>
-                {sampleData.blogObjects
-                    .sort((a, b) => a.positionInBlogEntry > b.positionInBlogEntry ? 1 : -1)
-                    .map(blogObject => (<BlogObject key={blogObject.positionInBlogEntry} blogObject={blogObject}/>))}
-            </section>
-            <div className={"float-end"}>
-                <FacebookShareButton url={shareUrl}>
-                    <FacebookIcon size={48}/>
-                </FacebookShareButton>
-                <TwitterShareButton url={shareUrl}>
-                    <TwitterIcon size={48}/>
-                </TwitterShareButton>
-                <LinkedinShareButton url={shareUrl}>
-                    <LinkedinIcon size={48}/>
-                </LinkedinShareButton>
-            </div>
-            <br/>
-        </article>
+                <hr/>
+            </article>
             {!isFrontpage &&
-            <Comments/>
+            sampleComment.map(comment => (<Comment key={comment.id} comment={comment}/>))
             }
         </>
     );
