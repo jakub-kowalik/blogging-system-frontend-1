@@ -2,8 +2,13 @@ import React, {useState} from "react";
 import BlogEntryObject from "./BlogEntryObject";
 import update from 'immutability-helper';
 import axios from "axios";
+import {toast} from 'react-toastify';
+import {useHistory} from "react-router-dom";
+import {updateCurrentUser} from "../../utility/Authorization";
 
 const BlogEntry = () => {
+    const history = useHistory();
+
     const [title, setTitle] = useState("");
     const [count, setCount] = useState(0);
 
@@ -24,8 +29,36 @@ const BlogEntry = () => {
         setBlogEntryObjects(newList);
     }
 
+    const isValidData = () => {
+        console.log("Sup")
+        if (title.length < 5) {
+            toast.error("Include a title that's at least 5 characters long.");
+            return false;
+        }
+        if (blogEntryObjects.length === 0) {
+            toast.error("Your blog entry must have content.");
+            return false;
+        }
+
+        for (const object of blogEntryObjects) {
+            if (object.type === "paragraph" && object.content.length < 20) {
+                toast.error("All your paragraphs must be at least 20 characters long.");
+                return false;
+            } else if (object.type === "photo" && object.content.length < 15) {
+                toast.error("All your photos must have a valid link.");
+                return false;
+            } else if (object.type !== "photo" && object.type !== "paragraph") {
+                toast.error("Something went wrong :/")
+                return false;
+            }
+        }
+        return true;
+    }
+
     const addBlogEntry = () => {
-        postBlogEntry(prepareData());
+        if (isValidData()) {
+            postBlogEntry();
+        }
     }
 
     const postBlogEntry = async () => {
@@ -34,26 +67,23 @@ const BlogEntry = () => {
             blogObjects: blogEntryObjects
         }
         console.log(payload)
-        await axios.post('http://localhost:8081/api/blog/redactor/createBlogEntry', payload,
+        axios.post('http://localhost:8081/api/blog/redactor/createBlogEntry', payload,
             config
-            ).then((response) => {
-                if (response.status === 201) {
-
-                } else if (response.status === 500) {
-
-                }
-            }).catch((error) =>  {
-            console.log("Error")
+        ).then((response) => {
+            if (response.status === 201) {
+                toast.success("Blog entry created!");
+                history.push('/home')
+            } else if (response.status === 500) {
+                toast.error('Something went wrong');
+            }
+        }).catch((error) => {
+            if (error.response.status === 401) {
+                toast.error("Your session timed out. Try re-logging to your account.");
+                updateCurrentUser();
+                history.push('/home');
+            }
         });
-    }
 
-
-
-    const prepareData = () => {
-        return {
-            title: title,
-            blogObjects: blogEntryObjects
-        };
     }
 
     const addNewBlogObject = () => {
@@ -61,19 +91,17 @@ const BlogEntry = () => {
             content: "",
             positionInBlogEntry: count,
             type: "paragraph"
-        } ];
+        }];
         setCount(count + 1);
         setBlogEntryObjects(updatedblogObjects);
     }
 
     return (
         <div>
-            <Toast></Toast>
-
-            <form >
+            <form>
                 <div className="form-group float-label-control">
                     <input type="text" className="form-control" placeholder="Title"
-                           onChange={e => setTitle(e.target.value)} />
+                           onChange={e => setTitle(e.target.value)}/>
                 </div>
                 <ul className="list-group">
                     {blogEntryObjects.map((object) =>
@@ -81,13 +109,14 @@ const BlogEntry = () => {
                                          updateBlogObject={updateBlogObject} blogEntryObject={object}/>
                     )}
                 </ul>
-                <button type="button" className="btn btn-secondary" onClick={addNewBlogObject}>Add new blog object</button>
+                <button type="button" className="btn btn-secondary" onClick={addNewBlogObject}>Add new blog object
+                </button>
 
 
                 <button type={"button"} className={"btn btn-success m-1"}
-                        onClick={addBlogEntry}>Publish blog entry</button>
+                        onClick={addBlogEntry}>Publish blog entry
+                </button>
             </form>
-
 
 
         </div>

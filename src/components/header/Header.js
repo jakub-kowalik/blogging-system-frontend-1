@@ -21,14 +21,14 @@ function Header() {
 
                     {isRedactor() &&
                     <NavDropdown title="Redactor menu" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="/newblogentry">Add post</NavDropdown.Item>
-                        <NavDropdown.Item href="/myblogentries">My posts </NavDropdown.Item>
+                        <NavDropdown.Item href="/newblogentry">Add new blog entry</NavDropdown.Item>
+                        <NavDropdown.Item href="/myblogentries">My blog entries </NavDropdown.Item>
                     </NavDropdown>
                     }
                     {isAdmin() &&
                     <NavDropdown title="Admin menu" id="basic-nav-dropdown">
                         <NavDropdown.Item href="/admin/users">Users</NavDropdown.Item>
-                        <NavDropdown.Item href="/admin/posts">Posts</NavDropdown.Item>
+                        <NavDropdown.Item href="/admin/posts">Blog entries</NavDropdown.Item>
                     </NavDropdown>
                     }
                     {!isUser() &&

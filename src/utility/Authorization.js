@@ -15,7 +15,7 @@ export const isAdmin = () => {
     return roles!==null && roles.includes("ROLE_ADMIN");
 }
 
-export const updateCurrentUser = ()=>{
+export const updateCurrentUser = () => {
     axios.get(
         'http://localhost:8081/users/currentUserInformation',
         { headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}}
@@ -32,6 +32,7 @@ export const updateCurrentUser = ()=>{
 
     }).catch(function (error) {
         console.log("Error updating current user data")
+        console.log(error);
     });
     return localStorage.getItem('token') !== null;
 }
