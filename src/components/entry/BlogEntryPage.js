@@ -1,6 +1,8 @@
 import axios from "axios";
 import BlogEntry from "./BlogEntry";
 import {useEffect, useState} from "react";
+import {toast} from "react-toastify";
+import {updateCurrentUser} from "../../utility/Authorization";
 
 const BlogEntryPage = (props) => {
     const [entryPost, setPost] = useState(null)
@@ -36,17 +38,20 @@ const BlogEntryPage = (props) => {
     }
 
     const addComment = async (parentId, comment) => {
-        console.log(parentId)
-        console.log(comment)
+
         await axios.post('http://localhost:8081/api/blog/createComment?parentId=' + parentId, comment,
             { headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}})
             .then((response) => {
                 if (response.status === 201) {
+                    toast.success("Comment added successfully!");
                     loadComments();
                 } else {
                     alert('Error Updating This Product')
                 }
-            })
+            }).catch(error => {
+            toast.error("Can't add comment.");
+            console.log(error);
+        });
     }
 
     function isNull() {
@@ -54,7 +59,7 @@ const BlogEntryPage = (props) => {
     }
 
     useEffect(() => {
-        console.log(props.match.params.id)
+        updateCurrentUser();
         loadEntry()
         loadComments()
     }, [])

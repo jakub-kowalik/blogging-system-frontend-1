@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {toast} from "react-toastify";
 
 export const isRedactor = () => {
     let roles = localStorage.getItem('roles');
@@ -15,6 +16,12 @@ export const isAdmin = () => {
     return roles!==null && roles.includes("ROLE_ADMIN");
 }
 
+export const isCurrentUserId = (id) => {
+    let currentUserId = localStorage.getItem('currentUserId');
+    console.log(currentUserId);
+    return currentUserId!==null && currentUserId === id;
+}
+
 export const updateCurrentUser = () => {
     axios.get(
         'http://localhost:8081/users/currentUserInformation',
@@ -26,7 +33,10 @@ export const updateCurrentUser = () => {
             })
             console.log(roles.toString())
             localStorage.setItem("roles", roles.toString());
+            console.log(response.data)
+            localStorage.setItem("currentUserId", response.data.id);
         } else {
+            localStorage.setItem("currentUser", null);
             localStorage.setItem("roles", null);
         }
 
@@ -35,4 +45,20 @@ export const updateCurrentUser = () => {
         console.log(error);
     });
     return localStorage.getItem('token') !== null;
+}
+
+export const handleError = (error, history) => {
+    if (error.response) {
+        if(error.response.status === 401){
+            toast.error("Your session timed out. Try re-logging to your account.");
+            updateCurrentUser();
+            history.push('/home');
+        }
+        else if (error.response.status === 500) {
+            toast.error('Server error');
+        }
+    } else {
+        toast.error('Some error occured');
+        console.log(error);
+    }
 }

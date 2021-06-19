@@ -1,14 +1,14 @@
 import './App.css';
-import {BrowserRouter as Router, Route, } from 'react-router-dom';
+import {BrowserRouter as Router, Route,} from 'react-router-dom';
 import RegisterPage from "./components/register/RegisterPage";
 import LoginPage from "./components/login/LoginPage";
 import HomePage from "./components/home/HomePage";
 import Header from "./components/header/Header";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import BlogEntry from "./components/entry/BlogEntry";
-import AddBlogEntry from "./components/new_post/AddBlogEntry";
+import EditBlogEntry from "./components/new_post/EditBlogEntry";
 import BlogEntryPage from "./components/entry/BlogEntryPage";
+import EditBlogEntryPage from "./components/new_post/EditBlogEntryPage";
 
 
 function App() {
@@ -29,10 +29,11 @@ function App() {
                                 <HomePage/>
                             </Route>
                             <Route path={"/newblogentry"}>
-                                <AddBlogEntry/>
+                                <EditBlogEntry x_blogObjects={[]} x_count={0} x_title={""} newEntry={null}/>
                             </Route>
-                            <Route path={"/post/:id"} component={BlogEntryPage}>
-                            </Route>
+                            <Route path={"/editblogentry/:id"} component={EditBlogEntryPage}></Route>
+                            <Route path={"/post/:id"} component={BlogEntryPage}></Route>
+
                         </Router>
                     </div>
                     <div className="col">

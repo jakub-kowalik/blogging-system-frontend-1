@@ -1,20 +1,25 @@
 import BlogObject from "./BlogObject";
 import Comment from "./Comment";
-import {isUser} from "../../utility/Authorization";
+import {isCurrentUserId, isRedactor, isUser} from "../../utility/Authorization";
 import Socials from "./Socials";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import AddComment from "./AddComment";
+import {useHistory} from "react-router-dom";
 
 const BlogEntry = ({entryId, entryData, comments, addComment, isFrontpage, location}) => {
-    //const [comments, setComments] = useState([]);
+    const history = useHistory();
     const [addCommentBoolean, setAddCommentBoolean] = useState(false)
 
     const shareUrl = location
 
 
     const toggleAddComment = () => {
-        console.log(addCommentBoolean)
         setAddCommentBoolean(!addCommentBoolean);
+    }
+
+    const editEntry = () => {
+        if(entryData.author.id)
+        history.push("/editblogentry/" + entryId);
     }
 
     const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -50,6 +55,9 @@ const BlogEntry = ({entryId, entryData, comments, addComment, isFrontpage, locat
                         <div className={"col my-auto"}>
                             {isUser() &&
                                 <button className={"btn btn-dark"} onClick={() => toggleAddComment()}>Comment</button>
+                            }
+                            {isCurrentUserId(entryData.author.id) &&
+                            <button className={"btn btn-dark"} onClick={() => editEntry()}>Edit</button>
                             }
                         </div>
                         <div className={"col my-auto"}>
