@@ -4,6 +4,7 @@ import RegisterPage from "./components/register/RegisterPage";
 import LoginPage from "./components/login/LoginPage";
 import HomePage from "./components/home/HomePage";
 import Header from "./components/header/Header";
+import UsersPage from "./components/usersManagement/UsersPage";
 
 
 function App() {
@@ -20,6 +21,10 @@ function App() {
                 <Route path={"/home"}>
                     <HomePage/>
                 </Route>
+                <Route path={"/admin/users"}>
+                    <UsersPage/>
+                </Route>
+
             </Router>
 
         </div>
