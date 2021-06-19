@@ -30,7 +30,6 @@ const BlogEntry = () => {
     }
 
     const isValidData = () => {
-        console.log("Sup")
         if (title.length < 5) {
             toast.error("Include a title that's at least 5 characters long.");
             return false;
@@ -61,26 +60,31 @@ const BlogEntry = () => {
         }
     }
 
-    const postBlogEntry = async () => {
+    const postBlogEntry = () => {
         const payload = {
             title: title,
             blogObjects: blogEntryObjects
         }
-        console.log(payload)
         axios.post('http://localhost:8081/api/blog/redactor/createBlogEntry', payload,
             config
         ).then((response) => {
             if (response.status === 201) {
                 toast.success("Blog entry created!");
                 history.push('/home')
-            } else if (response.status === 500) {
-                toast.error('Something went wrong');
             }
         }).catch((error) => {
-            if (error.response.status === 401) {
-                toast.error("Your session timed out. Try re-logging to your account.");
-                updateCurrentUser();
-                history.push('/home');
+            if (error.response) {
+                if(error.response.status === 401){
+                    toast.error("Your session timed out. Try re-logging to your account.");
+                    updateCurrentUser();
+                    history.push('/home');
+                }
+                else if (error.response.status === 500) {
+                    toast.error('Server error');
+                }
+            } else {
+                toast.error('Some error occured');
+                console.log(error);
             }
         });
 
@@ -117,8 +121,6 @@ const BlogEntry = () => {
                         onClick={addBlogEntry}>Publish blog entry
                 </button>
             </form>
-
-
         </div>
     )
 }
