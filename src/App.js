@@ -4,6 +4,9 @@ import RegisterPage from "./components/register/RegisterPage";
 import LoginPage from "./components/login/LoginPage";
 import HomePage from "./components/home/HomePage";
 import Header from "./components/header/Header";
+import BlogEntry from "./components/new_post/BlogEntry";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -20,6 +23,20 @@ function App() {
                 <Route path={"/home"}>
                     <HomePage/>
                 </Route>
+                <Route path={"/newblogentry"}>
+                    <BlogEntry/>
+                </Route>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    />
             </Router>
 
         </div>
