@@ -4,6 +4,11 @@ import RegisterPage from "./components/register/RegisterPage";
 import LoginPage from "./components/login/LoginPage";
 import HomePage from "./components/home/HomePage";
 import Header from "./components/header/Header";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import BlogEntry from "./components/entry/BlogEntry";
+import AddBlogEntry from "./components/new_post/AddBlogEntry";
+import BlogEntryPage from "./components/entry/BlogEntryPage";
 
 
 function App() {
@@ -23,23 +28,25 @@ function App() {
                             <Route path={"/home"}>
                                 <HomePage/>
                             </Route>
-                            <Route path={"/post/:id"}>
-                                <BlogEntry/>
+                            <Route path={"/newblogentry"}>
+                                <AddBlogEntry/>
                             </Route>
-                            <ToastContainer
-                                position="bottom-right"
-                                autoClose={5000}
-                                hideProgressBar={false}
-                                newestOnTop={false}
-                                closeOnClick
-                                rtl={false}
-                                pauseOnFocusLoss
-                                draggable
-                                pauseOnHover
-                            />
+                            <Route path={"/post/:id"} component={BlogEntryPage}>
+                            </Route>
                         </Router>
                     </div>
                     <div className="col">
+                        <ToastContainer
+                            position="bottom-right"
+                            autoClose={5000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                        />
                     </div>
                 </div>
             </div>

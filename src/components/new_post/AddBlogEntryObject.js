@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const BlogEntryObject = ({onDelete, updateBlogObject, blogEntryObject}) => {
+const AddBlogEntryObject = ({onDelete, updateBlogObject, blogEntryObject}) => {
 
     const [isParagraph, setIsParagraph] = useState(true);
     const [content, setContent] = useState("");
@@ -76,4 +76,4 @@ const BlogEntryObject = ({onDelete, updateBlogObject, blogEntryObject}) => {
     );
 }
 
-export default BlogEntryObject
+export default AddBlogEntryObject

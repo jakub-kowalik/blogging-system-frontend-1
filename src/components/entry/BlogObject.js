@@ -1,7 +1,7 @@
 const BlogObject = ({blogObject}) => {
 
     function isText() {
-        return blogObject.type.includes('text');
+        return blogObject.type.includes('paragraph');
     }
 
     function isPhoto() {

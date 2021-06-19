@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-import BlogEntryObject from "./BlogEntryObject";
+import AddBlogEntryObject from "./AddBlogEntryObject";
 import update from 'immutability-helper';
 import axios from "axios";
 import {toast} from 'react-toastify';
 import {useHistory} from "react-router-dom";
 import {updateCurrentUser} from "../../utility/Authorization";
 
-const BlogEntry = () => {
+const AddBlogEntry = () => {
     const history = useHistory();
 
     const [title, setTitle] = useState("");
@@ -109,8 +109,8 @@ const BlogEntry = () => {
                 </div>
                 <ul className="list-group">
                     {blogEntryObjects.map((object) =>
-                        <BlogEntryObject key={object.positionInBlogEntry} onDelete={onDelete}
-                                         updateBlogObject={updateBlogObject} blogEntryObject={object}/>
+                        <AddBlogEntryObject key={object.positionInBlogEntry} onDelete={onDelete}
+                                            updateBlogObject={updateBlogObject} blogEntryObject={object}/>
                     )}
                 </ul>
                 <button type="button" className="btn btn-secondary" onClick={addNewBlogObject}>Add new blog object
@@ -125,4 +125,4 @@ const BlogEntry = () => {
     )
 }
 
-export default BlogEntry;
+export default AddBlogEntry;
