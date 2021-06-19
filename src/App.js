@@ -29,7 +29,7 @@ function App() {
                                 <HomePage/>
                             </Route>
                             <Route path={"/newblogentry"}>
-                                <EditBlogEntry x_blogObjects={[]} x_count={0} x_title={""} newEntry={null}/>
+                                <EditBlogEntry  />
                             </Route>
                             <Route path={"/editblogentry/:id"} component={EditBlogEntryPage}></Route>
                             <Route path={"/post/:id"} component={BlogEntryPage}></Route>

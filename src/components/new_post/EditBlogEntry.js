@@ -9,13 +9,18 @@ import {handleError} from "../../utility/Authorization";
 const EditBlogEntry = ({blogEntry, entryId}) => {
     const history = useHistory();
 
-    const [title, setTitle] = useState(blogEntry.title);
+    const [title, setTitle] = useState("");
     const [count, setCount] = useState(0);
-    const [blogEntryObjects, setBlogEntryObjects] = useState(blogEntry.blogObjects);
+    const [blogEntryObjects, setBlogEntryObjects] = useState([]);
 
     useEffect(() => {
-        const positionsArray = blogEntry.blogObjects.map(object => object.positionInBlogEntry);
-        setCount(Math.max.apply(Math, positionsArray) + 1);
+        console.log(blogEntry);
+        if(blogEntry) {
+            setTitle(blogEntry.title);
+            setBlogEntryObjects(blogEntry.blogObjects);
+            const positionsArray = blogEntry.blogObjects.map(object => object.positionInBlogEntry);
+            setCount(Math.max.apply(Math, positionsArray) + 1);
+        }
     }, []);
 
 
@@ -61,7 +66,7 @@ const EditBlogEntry = ({blogEntry, entryId}) => {
 
     const addBlogEntry = () => {
         if (isValidData()) {
-            if(entryId === null)
+            if(!blogEntry)
                 postBlogEntry();
             else
                 updateBlogEntry();

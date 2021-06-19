@@ -31,7 +31,7 @@ const EditBlogEntryPage = (props) => {
     return (
         <>
             {
-                blogEntry !== null &&
+                blogEntry !== null && blogEntry !== undefined &&
                 <EditBlogEntry blogEntry={blogEntry}
                                entryId={entryId}></EditBlogEntry>
             }

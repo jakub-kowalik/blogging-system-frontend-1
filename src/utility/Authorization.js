@@ -31,12 +31,10 @@ export const updateCurrentUser = () => {
             let roles = response.data.roles.map(role => {
                 return "ROLE_" + role.name;
             })
-            console.log(roles.toString())
             localStorage.setItem("roles", roles.toString());
-            console.log(response.data)
             localStorage.setItem("currentUserId", response.data.id);
         } else {
-            localStorage.setItem("currentUser", null);
+            localStorage.setItem("currentUserId", null);
             localStorage.setItem("roles", null);
         }
 
