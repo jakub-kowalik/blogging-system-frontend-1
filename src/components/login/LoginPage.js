@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import jwt from 'jwt-decode'
-import { withRouter } from "react-router-dom";
+import {withRouter} from "react-router-dom";
+import {toast} from "react-toastify";
 
 
-function LoginForm(props) {
+function LoginForm() {
     const [state , setState] = useState({
         email : "",
         password : "",
-        successMessage: null
     })
     const handleChange = (e) => {
         const {id , value} = e.target
@@ -27,29 +27,24 @@ function LoginForm(props) {
         axios.post('http://localhost:8081/users/authenticate', payload)
             .then(function (response) {
                 if(response.status === 200){
-                    setState(prevState => ({
-                        ...prevState,
-                        'successMessage' : 'Login successful. Redirecting to home page..'
-                    }))
                     localStorage.setItem("token", response.data['token']);
                     const decoded = jwt(localStorage.getItem('token'));
                     localStorage.setItem("roles", decoded['roles']);
+
+                    toast.success("Logged in.")
                     redirectToHome();
-                    // props.showError(null)
                 }
 
             })
             .catch(function (error) {
-                // props.showError("Invalid credentials");
+                toast.error("Invalid credentials");
                 console.log(error);
             });
     }
     const redirectToHome = () => {
         window.location.replace('/');
     }
-    const redirectToRegister = () => {
-        window.location.replace('/register');
-    }
+
     return(
         <div className="card mt-3 p-3">
             <form>
@@ -81,14 +76,6 @@ function LoginForm(props) {
                     onClick={handleSubmitClick}
                 >Submit</button>
             </form>
-            <div className="registerMessage">
-                <span>Dont have an account? </span>
-                <span className="loginText" onClick={() => redirectToRegister()}>Register</span>
-            </div>
-            <div className="alert alert-success mt-2" style={{display: state.successMessage ? 'block' : 'none' }} role="alert">
-                {state.successMessage}
-            </div>
-
         </div>
     )
 }
