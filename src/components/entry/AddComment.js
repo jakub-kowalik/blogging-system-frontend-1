@@ -6,7 +6,7 @@ const AddComment = ({parentId, addComment, toggleButton}) => {
 
     return (
         <div>
-            <form role="form">
+            <form>
                 <div className="form-group float-label-control">
                     <input type="text" className="form-control" placeholder="Username"
                            onChange={e => setUsernameInput(e.target.value)}/>

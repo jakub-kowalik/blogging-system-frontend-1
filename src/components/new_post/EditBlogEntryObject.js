@@ -52,7 +52,7 @@ const EditBlogEntryObject = ({onDelete, updateBlogObject, blogEntryObject}) => {
                     isParagraph &&
                     <div className="form-group text-left">
                         <label> Paragraph:
-                            <textarea className="form-control mb-2 mr-sm-2" defaultValue={""}
+                            <textarea className="form-control mb-2 mr-sm-2"
                                       onChange={contentChanged} defaultValue={content} minLength="3"/>
                         </label>
                     </div>
@@ -62,7 +62,7 @@ const EditBlogEntryObject = ({onDelete, updateBlogObject, blogEntryObject}) => {
                     <div>
                         <img ref={photoPreview} id="photoPreview" src="#" alt=""/>
                         <label> Photo link:
-                            <input type="text" className="form-control mb-2 mr-sm-2" defaultValue={""}
+                            <input type="text" className="form-control mb-2 mr-sm-2"
                                    onChange={contentChanged} defaultValue={content} minLength="3"/>
                         </label>
                     </div>
