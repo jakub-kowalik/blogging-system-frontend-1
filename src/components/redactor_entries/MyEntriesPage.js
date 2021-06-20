@@ -1,0 +1,39 @@
+import React, {useEffect, useState} from "react";
+import axios from "axios";
+import {handleError} from "../../utility/Authorization";
+import {useHistory} from "react-router-dom";
+import SmallEntry from "./SmallEntry";
+
+const MyEntriesPage = () => {
+    const history = useHistory();
+    const [entries, setEntries] = useState([]);
+
+    useEffect(() => {
+        axios.get(
+            'http://localhost:8081/api/blog/redactor/getAllCurrentUserBlogEntries',
+            {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}}
+        ).then((response) => {
+            if (response.status === 200) {
+                setEntries(response.data);
+                console.log(response.data);
+            }
+        }).catch(function (error) {
+            handleError(error, history);
+        });
+    },[]);
+
+
+    return (
+        <div>
+            {entries
+                .sort((a,b) => {
+                    return new Date(b.createdDate) - new Date(a.createdDate);
+                })
+                .map((entry) =>
+                <SmallEntry key={entry.createdDate} entry ={entry}/>
+            )}
+        </div>
+    )
+}
+
+export default MyEntriesPage;

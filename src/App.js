@@ -10,6 +10,7 @@ import EditBlogEntry from "./components/new_post/EditBlogEntry";
 import BlogEntryPage from "./components/entry/BlogEntryPage";
 import EditBlogEntryPage from "./components/new_post/EditBlogEntryPage";
 import UsersPage from "./components/usersManagement/UsersPage";
+import MyEntriesPage from "./components/redactor_entries/MyEntriesPage";
 
 
 function App() {
@@ -33,10 +34,13 @@ function App() {
                                 <UsersPage/>
                             </Route>
                             <Route path={"/newblogentry"}>
-                                <EditBlogEntry  />
+                                <EditBlogEntry/>
                             </Route>
                             <Route path={"/editblogentry/:id"} component={EditBlogEntryPage}></Route>
                             <Route path={"/post/:id"} component={BlogEntryPage}></Route>
+                            <Route path={"/myblogentries"}>
+                                <MyEntriesPage/>
+                            </Route>
 
                         </Router>
                     </div>
