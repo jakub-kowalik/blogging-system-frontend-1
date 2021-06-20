@@ -4,7 +4,7 @@ import {Button} from "react-bootstrap";
 import CustomModal from "../modal/CustomModal";
 import {toast} from "react-toastify";
 import {useHistory} from "react-router-dom";
-import {updateCurrentUser} from "../../utility/Authorization";
+import {handleError, updateCurrentUser} from "../../utility/Authorization";
 
 
 const UserBasicInfo = ({user, deleteUserFromList}) => {
@@ -26,19 +26,7 @@ const UserBasicInfo = ({user, deleteUserFromList}) => {
                 deleteUserFromList(user.id);
             }
         }).catch(function (error) {
-            if (error.response) {
-                if(error.response.status === 401){
-                    toast.error("Your session timed out. Try re-logging to your account.");
-                    updateCurrentUser();
-                    history.push('/home');
-                }
-                else if (error.response.status === 500) {
-                    toast.error('Server error');
-                }
-            } else {
-                toast.error('Some error occured');
-                console.log(error);
-            }
+            handleError(error, history);
         });
     }
 
@@ -52,19 +40,7 @@ const UserBasicInfo = ({user, deleteUserFromList}) => {
                 setRoles([...roles, "REDACTOR"]);
             }
         }).catch(function (error) {
-            if (error.response) {
-                if(error.response.status === 401){
-                    toast.error("Your session timed out. Try re-logging to your account.");
-                    updateCurrentUser();
-                    history.push('/home');
-                }
-                else if (error.response.status === 500) {
-                    toast.error('Server error');
-                }
-            } else {
-                toast.error('Something went wrong');
-                console.log(error);
-            }
+            handleError(error, history);
         });
     }
 
@@ -78,19 +54,7 @@ const UserBasicInfo = ({user, deleteUserFromList}) => {
                 setRoles(roles.filter(item => item !== "REDACTOR")); // delete redactor from list
             }
         }).catch(function (error) {
-            if (error.response) {
-                if(error.response.status === 401){
-                    toast.error("Your session timed out. Try re-logging to your account.");
-                    updateCurrentUser();
-                    history.push('/home');
-                }
-                else if (error.response.status === 500) {
-                    toast.error('Server error');
-                }
-            } else {
-                toast.error('Something went wrong');
-                console.log(error);
-            }
+            handleError(error, history);
         });
     }
 
