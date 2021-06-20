@@ -1,18 +1,28 @@
-import React, {useState} from "react";
-import BlogEntryObject from "./BlogEntryObject";
+import React, {useEffect, useState} from "react";
+import EditBlogEntryObject from "./EditBlogEntryObject";
 import update from 'immutability-helper';
 import axios from "axios";
 import {toast} from 'react-toastify';
 import {useHistory} from "react-router-dom";
-import {updateCurrentUser} from "../../utility/Authorization";
+import {handleError} from "../../utility/Authorization";
 
-const BlogEntry = () => {
+const EditBlogEntry = ({blogEntry, entryId}) => {
     const history = useHistory();
 
     const [title, setTitle] = useState("");
     const [count, setCount] = useState(0);
-
     const [blogEntryObjects, setBlogEntryObjects] = useState([]);
+
+    useEffect(() => {
+        console.log(blogEntry);
+        if(blogEntry) {
+            setTitle(blogEntry.title);
+            setBlogEntryObjects(blogEntry.blogObjects);
+            const positionsArray = blogEntry.blogObjects.map(object => object.positionInBlogEntry);
+            setCount(Math.max.apply(Math, positionsArray) + 1);
+        }
+    }, []);
+
 
     const config = {
         headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}
@@ -56,8 +66,29 @@ const BlogEntry = () => {
 
     const addBlogEntry = () => {
         if (isValidData()) {
-            postBlogEntry();
+            if(!blogEntry)
+                postBlogEntry();
+            else
+                updateBlogEntry();
         }
+    }
+
+    const updateBlogEntry = () => {
+        const payload = {
+            title: title,
+            blogObjects: blogEntryObjects
+        }
+        axios.put('http://localhost:8081/api/blog/redactor/updateBlogEntry?entryUUID=' + entryId, payload,
+            config
+        ).then((response) => {
+            if (response.status === 200) {
+                toast.success("Blog entry updated!");
+                history.push('/post/' + response.data);
+            }
+        }).catch((error) => {
+            handleError(error, history);
+        });
+
     }
 
     const postBlogEntry = () => {
@@ -70,22 +101,10 @@ const BlogEntry = () => {
         ).then((response) => {
             if (response.status === 201) {
                 toast.success("Blog entry created!");
-                history.push('/home')
+                history.push('/post/' + response.data);
             }
         }).catch((error) => {
-            if (error.response) {
-                if(error.response.status === 401){
-                    toast.error("Your session timed out. Try re-logging to your account.");
-                    updateCurrentUser();
-                    history.push('/home');
-                }
-                else if (error.response.status === 500) {
-                    toast.error('Server error');
-                }
-            } else {
-                toast.error('Some error occured');
-                console.log(error);
-            }
+            handleError(error, history);
         });
 
     }
@@ -104,13 +123,13 @@ const BlogEntry = () => {
         <div>
             <form>
                 <div className="form-group float-label-control">
-                    <input type="text" className="form-control" placeholder="Title"
+                    <input type="text" className="form-control" placeholder="Title" defaultValue={title}
                            onChange={e => setTitle(e.target.value)}/>
                 </div>
                 <ul className="list-group">
                     {blogEntryObjects.map((object) =>
-                        <BlogEntryObject key={object.positionInBlogEntry} onDelete={onDelete}
-                                         updateBlogObject={updateBlogObject} blogEntryObject={object}/>
+                        <EditBlogEntryObject key={object.positionInBlogEntry} onDelete={onDelete}
+                                             updateBlogObject={updateBlogObject} blogEntryObject={object}/>
                     )}
                 </ul>
                 <button type="button" className="btn btn-secondary" onClick={addNewBlogObject}>Add new blog object
@@ -125,4 +144,4 @@ const BlogEntry = () => {
     )
 }
 
-export default BlogEntry;
+export default EditBlogEntry;

@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 
-const BlogEntryObject = ({onDelete, updateBlogObject, blogEntryObject}) => {
+const EditBlogEntryObject = ({onDelete, updateBlogObject, blogEntryObject}) => {
 
-    const [isParagraph, setIsParagraph] = useState(true);
-    const [content, setContent] = useState("");
-    const [type, setType] = useState("paragraph");
+    const [isParagraph, setIsParagraph] = useState(blogEntryObject.type === "paragraph");
+    const [content, setContent] = useState(blogEntryObject.content);
+    const [type, setType] = useState(blogEntryObject.type);
 
     const photoPreview = React.createRef();
 
@@ -53,7 +53,7 @@ const BlogEntryObject = ({onDelete, updateBlogObject, blogEntryObject}) => {
                     <div className="form-group text-left">
                         <label> Paragraph:
                             <textarea className="form-control mb-2 mr-sm-2" defaultValue={""}
-                                      onChange={contentChanged} minLength="3"/>
+                                      onChange={contentChanged} defaultValue={content} minLength="3"/>
                         </label>
                     </div>
                 }
@@ -63,7 +63,7 @@ const BlogEntryObject = ({onDelete, updateBlogObject, blogEntryObject}) => {
                         <img ref={photoPreview} id="photoPreview" src="#" alt=""/>
                         <label> Photo link:
                             <input type="text" className="form-control mb-2 mr-sm-2" defaultValue={""}
-                                   onChange={contentChanged} minLength="3"/>
+                                   onChange={contentChanged} defaultValue={content} minLength="3"/>
                         </label>
                     </div>
                 }
@@ -76,4 +76,4 @@ const BlogEntryObject = ({onDelete, updateBlogObject, blogEntryObject}) => {
     );
 }
 
-export default BlogEntryObject
+export default EditBlogEntryObject
