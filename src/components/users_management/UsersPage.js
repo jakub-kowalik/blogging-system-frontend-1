@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import UserBasicInfo from "./UserBasicInfo";
-import {toast} from "react-toastify";
+import {handleError} from "../../utility/Authorization";
+import {useHistory} from "react-router-dom";
 
 const UsersPage = () => {
+    const history = useHistory();
     const [users, setUsers] = useState([]);
 
 
@@ -16,8 +18,7 @@ const UsersPage = () => {
                 setUsers(response.data);
             }
         }).catch(function (error) {
-            toast.error('Some error occured');
-            console.log(error)
+            handleError(error, history)
         });
     }, [])
 

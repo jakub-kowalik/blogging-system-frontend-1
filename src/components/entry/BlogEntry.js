@@ -10,13 +10,13 @@ import {toast} from "react-toastify";
 import CustomModal from "../modal/CustomModal";
 import {Container, Col, Row} from "react-bootstrap";
 
-const BlogEntry = ({entryId, entryData, comments, addComment, isFrontpage, location}) => {
+const BlogEntry = ({entryId, entryData, comments, addComment, isFrontpage, socialUrl}) => {
     const history = useHistory();
     const [addCommentBoolean, setAddCommentBoolean] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
 
-    const shareUrl = location
+    const shareUrl = socialUrl
 
 
     const toggleAddComment = () => {

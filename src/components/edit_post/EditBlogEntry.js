@@ -12,10 +12,11 @@ const EditBlogEntry = ({blogEntry, entryId}) => {
     const [title, setTitle] = useState("");
     const [count, setCount] = useState(0);
     const [blogEntryObjects, setBlogEntryObjects] = useState([]);
+    const [action, setAction] = useState("Create");
 
     useEffect(() => {
-        console.log(blogEntry);
         if(blogEntry) {
+            setAction("Edit");
             setTitle(blogEntry.title);
             setBlogEntryObjects(blogEntry.blogObjects);
             const positionsArray = blogEntry.blogObjects.map(object => object.positionInBlogEntry);
@@ -121,7 +122,7 @@ const EditBlogEntry = ({blogEntry, entryId}) => {
 
     return (
         <div>
-            <h1 className={"float-start mb-5 mt-0"}>Create new post</h1>
+            <h1 className={"float-start mb-5 mt-0"}>{action} new blog entry</h1>
             <form className={"w-50 m-5"}>
                 <div className="form-group float-label-control">
                     <input type="text" className="form-control" placeholder="Title" defaultValue={title}
@@ -137,7 +138,7 @@ const EditBlogEntry = ({blogEntry, entryId}) => {
                 <button type="button" className="btn btn-primary w-100 my-1" onClick={addNewBlogObject}>Add new blog object
                 </button>
                 <button type={"button"} className={"btn btn-success w-100 my-1"}
-                        onClick={addBlogEntry}>Publish blog entry
+                        onClick={addBlogEntry}>{action} blog entry
                 </button>
                 </div>
             </form>

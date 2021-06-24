@@ -87,7 +87,7 @@ function RegisterPage() {
 
 
     return(
-        <div className="card mt-3 p-3">
+        <div className="card mt-3 p-3 w-50">
             <form>
                 <div className="form-group text-left">
                     <label htmlFor="exampleInputEmail1">Email address</label>
@@ -99,7 +99,6 @@ function RegisterPage() {
                            value={state.email}
                            onChange={handleChange}
                     />
-                    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div className="form-group text-left">
                     <label htmlFor="exampleInputUsername1">Username</label>
@@ -133,7 +132,7 @@ function RegisterPage() {
                 </div>
                 <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-primary form-control my-3"
                     onClick={handleSubmit}
                 >
                     Register
