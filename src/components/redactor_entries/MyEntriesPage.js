@@ -24,7 +24,7 @@ const MyEntriesPage = () => {
 
 
     return (
-        <div>
+        <>
             {entries
                 .sort((a,b) => {
                     return new Date(b.createdDate) - new Date(a.createdDate);
@@ -32,7 +32,7 @@ const MyEntriesPage = () => {
                 .map((entry) =>
                 <SmallEntry key={entry.createdDate} entry ={entry}/>
             )}
-        </div>
+        </>
     )
 }
 

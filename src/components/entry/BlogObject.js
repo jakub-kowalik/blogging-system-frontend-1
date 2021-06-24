@@ -11,7 +11,7 @@ const BlogObject = ({blogObject}) => {
     return (
         <>
             {isText() &&
-            <p style={{textIndent: "4em"}}>
+            <p style={{textIndent: "4em", whiteSpace: "pre-wrap"}}>
                 {blogObject.content}
             </p>
             }

@@ -11,15 +11,15 @@ import BlogEntryPage from "./components/entry/BlogEntryPage";
 import EditBlogEntryPage from "./components/new_post/EditBlogEntryPage";
 import UsersPage from "./components/usersManagement/UsersPage";
 import MyEntriesPage from "./components/redactor_entries/MyEntriesPage";
-
+import {Container, Col, Row} from "react-bootstrap";
 
 function App() {
     return (
         <div className="App">
             <Header/>
-            <div className="container mx-xl-5">
-                <div className="row">
-                    <div className="col-12">
+            <Container className={"mx-xl-5"}>
+                <Row>
+                    <Col className={"col-12"}>
                         <Router>
                             <Route path={"/register"}>
                                 <RegisterPage/>
@@ -41,10 +41,9 @@ function App() {
                             <Route path={"/myblogentries"}>
                                 <MyEntriesPage/>
                             </Route>
-
                         </Router>
-                    </div>
-                    <div className="col">
+                    </Col>
+                    <Col>
                         <ToastContainer
                             position="bottom-right"
                             autoClose={5000}
@@ -56,9 +55,9 @@ function App() {
                             draggable
                             pauseOnHover
                         />
-                    </div>
-                </div>
-            </div>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     );
 }

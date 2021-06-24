@@ -12,14 +12,28 @@ const SmallEntry = ({entry}) => {
     const createdDate = entry.createdDate;
 
     const goToEntryPage = () => {
-        history.push('post/'+id);
+        history.push('post/'+ entry.id);
     }
 
     return (
-        <div>
-            <p>{title} , ilosc wyswietlen = {viewCount} , utworzony {createdDate}</p>
-            <Button onClick={goToEntryPage}>Go there</Button>
-        </div>
+        <>
+            <article className={"text-start px-5 pt-3 pb-3 m-3 bg-light rounded-3"}>
+                <header className="mb-4">
+
+                    <h3 className="fw-bolder mb-1">{entry.title}</h3>
+
+
+                    <div className="text-muted fst-italic mb-2">Posted on <span
+                        title={entry.createdDate}>{entry.createdDate}</span>
+                    </div>
+
+                </header>
+
+                <hr/>
+                <Button onClick={goToEntryPage}>Go there</Button>
+            </article>
+
+        </>
     )
 }
 

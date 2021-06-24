@@ -121,7 +121,8 @@ const EditBlogEntry = ({blogEntry, entryId}) => {
 
     return (
         <div>
-            <form>
+            <h1 className={"float-start mb-5 mt-0"}>Create new post</h1>
+            <form className={"w-50 m-5"}>
                 <div className="form-group float-label-control">
                     <input type="text" className="form-control" placeholder="Title" defaultValue={title}
                            onChange={e => setTitle(e.target.value)}/>
@@ -132,13 +133,13 @@ const EditBlogEntry = ({blogEntry, entryId}) => {
                                              updateBlogObject={updateBlogObject} blogEntryObject={object}/>
                     )}
                 </ul>
-                <button type="button" className="btn btn-secondary" onClick={addNewBlogObject}>Add new blog object
+                <div className={"my-1"}>
+                <button type="button" className="btn btn-primary w-100 my-1" onClick={addNewBlogObject}>Add new blog object
                 </button>
-
-
-                <button type={"button"} className={"btn btn-success m-1"}
+                <button type={"button"} className={"btn btn-success w-100 my-1"}
                         onClick={addBlogEntry}>Publish blog entry
                 </button>
+                </div>
             </form>
         </div>
     )
