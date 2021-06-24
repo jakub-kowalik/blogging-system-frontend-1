@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter as Router, Route, } from 'react-router-dom';
+import {Redirect, BrowserRouter as Router, Route } from 'react-router-dom';
 import RegisterPage from "./components/register/RegisterPage";
 import LoginPage from "./components/login/LoginPage";
 import HomePage from "./components/home/HomePage";
@@ -28,6 +28,9 @@ function App() {
                                 <LoginPage/>
                             </Route>
                             <Route path={"/home"}>
+                                <Redirect to="/" />
+                            </Route>
+                            <Route exact path={"/"}>
                                 <HomePage/>
                             </Route>
                             <Route path={"/admin/users"}>
