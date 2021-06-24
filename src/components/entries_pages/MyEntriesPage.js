@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {handleError} from "../../utility/Authorization";
 import {useHistory} from "react-router-dom";
-import SmallEntry from "../entries_components/SmallEntry";
 import DetailedEntry from "../entries_components/DetailedEntry";
 
 const MyEntriesPage = () => {
@@ -11,7 +10,7 @@ const MyEntriesPage = () => {
 
     useEffect(() => {
         axios.get(
-            'http://localhost:8081/api/blog/redactor/getAllCurrentUserBlogEntries',
+            process.env.REACT_APP_BACKEND_URL + '/api/blog/redactor/getAllCurrentUserBlogEntries',
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}}
         ).then((response) => {
             if (response.status === 200) {

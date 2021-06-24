@@ -10,7 +10,7 @@ const AdminEntriesPage = () => {
 
     useEffect(() => {
         axios.get(
-            'http://localhost:8081/api/blog/admin/getAllEntries',
+            process.env.REACT_APP_BACKEND_URL + '/api/blog/admin/getAllEntries',
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}}
         ).then((response) => {
             if (response.status === 200) {

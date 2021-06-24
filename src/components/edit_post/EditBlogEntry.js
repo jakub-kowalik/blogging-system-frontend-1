@@ -78,7 +78,7 @@ const EditBlogEntry = ({blogEntry, entryId}) => {
             title: title,
             blogObjects: blogEntryObjects
         }
-        axios.put('http://localhost:8081/api/blog/redactor/updateBlogEntry?entryUUID=' + entryId, payload,
+        axios.put(process.env.REACT_APP_BACKEND_URL + '/api/blog/redactor/updateBlogEntry?entryUUID=' + entryId, payload,
             config
         ).then((response) => {
             if (response.status === 200) {
@@ -96,7 +96,7 @@ const EditBlogEntry = ({blogEntry, entryId}) => {
             title: title,
             blogObjects: blogEntryObjects
         }
-        axios.post('http://localhost:8081/api/blog/redactor/createBlogEntry', payload,
+        axios.post(process.env.REACT_APP_BACKEND_URL + '/api/blog/redactor/createBlogEntry', payload,
             config
         ).then((response) => {
             if (response.status === 201) {

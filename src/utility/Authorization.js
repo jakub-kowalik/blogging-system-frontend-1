@@ -30,7 +30,7 @@ export const getCurrentUserName = () => {
 
 export const updateCurrentUser = () => {
     axios.get(
-        'http://localhost:8081/users/currentUserInformation',
+        process.env.REACT_APP_BACKEND_URL + '/users/currentUserInformation',
         { headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}}
     ).then((response) => {
         if(response.status === 200) {

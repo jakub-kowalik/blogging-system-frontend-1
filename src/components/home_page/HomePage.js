@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
 import axios from "axios";
-import SmallEntry from "../entries_components/SmallEntry";
 import Typography from "@material-ui/core/Typography";
 import Pagination from '@material-ui/lab/Pagination';
 import "./Homepage.css"
@@ -19,7 +18,7 @@ const Homepage = () => {
 
     const getPage = (pageNr) => {
         axios.get(
-            `http://localhost:8081/api/blog/getFrontPage?page=${pageNr - 1}&size=${displayedEntries}`,
+            process.env.REACT_APP_BACKEND_URL + `/api/blog/getFrontPage?page=${pageNr - 1}&size=${displayedEntries}`,
         ).then((response) => {
             if(response.status === 200) {
                 setEntries(response.data.content)

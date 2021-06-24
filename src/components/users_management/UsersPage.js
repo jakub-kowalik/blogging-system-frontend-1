@@ -9,7 +9,7 @@ const UsersPage = () => {
 
     useEffect(() => {
         axios.get(
-            'http://localhost:8081/users/admin/getAllUsers',
+            process.env.REACT_APP_BACKEND_URL + '/users/admin/getAllUsers',
             { headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}}
         ).then((response) => {
             if(response.status === 200) {

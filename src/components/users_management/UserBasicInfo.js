@@ -18,7 +18,7 @@ const UserBasicInfo = ({user, deleteUserFromList}) => {
 
     const deleteUser = () => {
         axios.delete(
-            'http://localhost:8081/users/admin/deleteUser?userId=' + user.id,
+            process.env.REACT_APP_BACKEND_URL + '/users/admin/deleteUser?userId=' + user.id,
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}}
         ).then((response) => {
             if (response.status === 204) {
@@ -32,7 +32,7 @@ const UserBasicInfo = ({user, deleteUserFromList}) => {
 
     const promoteUserToRedactor = () => {
         axios.post(
-            'http://localhost:8081/users/admin/promoteUserToRedactor?userId=' + user.id, "",
+            process.env.REACT_APP_BACKEND_URL + '/users/admin/promoteUserToRedactor?userId=' + user.id, "",
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}}
         ).then((response) => {
             if (response.status === 200) {
@@ -46,7 +46,7 @@ const UserBasicInfo = ({user, deleteUserFromList}) => {
 
     const demoteRedactorToUser = () => {
         axios.post(
-            'http://localhost:8081/users/admin/demoteRedactorToUser?userId=' + user.id, "",
+            process.env.REACT_APP_BACKEND_URL + '/users/admin/demoteRedactorToUser?userId=' + user.id, "",
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}}
         ).then((response) => {
             if (response.status === 200) {

@@ -17,7 +17,7 @@ const EditBlogEntryPage = (props) => {
 
     const getEntry = () => {
         axios.get(
-            'http://localhost:8081/api/blog/getBlogEntryById?entryUUID=' + entryId,
+            process.env.REACT_APP_BACKEND_URL + '/api/blog/getBlogEntryById?entryUUID=' + entryId,
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}}
         ).then((response) => {
             if (response.status === 200) {

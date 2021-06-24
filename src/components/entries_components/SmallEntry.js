@@ -31,7 +31,7 @@ const SmallEntry = ({entry}) => {
 
                 <hr/>
 
-                <a href={"http://localhost:3000/post/" + entry.id}><Button onClick={goToEntryPage}>Read more</Button></a>
+                <a href={"/post/" + entry.id}><Button onClick={goToEntryPage}>Read more</Button></a>
             </article>
 
         </>

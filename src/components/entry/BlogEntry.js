@@ -30,7 +30,7 @@ const BlogEntry = ({entryId, entryData, comments, addComment, isFrontpage, locat
 
     const deleteEntry = () => {
         axios.delete(
-            'http://localhost:8081/api/blog/redactor/deleteBlogEntry?entryUUID=' + entryId,
+            process.env.REACT_APP_BACKEND_URL + '/api/blog/redactor/deleteBlogEntry?entryUUID=' + entryId,
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}}
         ).then((response) => {
             if (response.status === 204) {
