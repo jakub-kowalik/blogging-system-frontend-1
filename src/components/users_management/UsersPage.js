@@ -3,6 +3,7 @@ import axios from "axios";
 import UserBasicInfo from "./UserBasicInfo";
 import {handleError} from "../../utility/Authorization";
 import {useHistory} from "react-router-dom";
+import {Table} from "react-bootstrap";
 
 const UsersPage = () => {
     const history = useHistory();
@@ -12,9 +13,9 @@ const UsersPage = () => {
     useEffect(() => {
         axios.get(
             process.env.REACT_APP_BACKEND_URL + '/users/admin/getAllUsers',
-            { headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}}
+            {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}}
         ).then((response) => {
-            if(response.status === 200) {
+            if (response.status === 200) {
                 setUsers(response.data);
             }
         }).catch(function (error) {
@@ -30,9 +31,22 @@ const UsersPage = () => {
 
     return (
         <div>
-            {users.map((user) =>
-                <UserBasicInfo key={user.id} user={user} deleteUserFromList={deleteUserFromList}/>
-            )}
+            <Table striped bordered hover>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>ID</th>
+                    <th>Roles</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {users.map((user, index) =>
+                    <UserBasicInfo key={user.id} index={index} user={user} deleteUserFromList={deleteUserFromList}/>
+                )}
+                </tbody>
+            </Table>
         </div>
     )
 }

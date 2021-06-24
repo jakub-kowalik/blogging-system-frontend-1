@@ -7,7 +7,7 @@ import {useHistory} from "react-router-dom";
 import {handleError, updateCurrentUser} from "../../utility/Authorization";
 
 
-const UserBasicInfo = ({user, deleteUserFromList}) => {
+const UserBasicInfo = ({user, index, deleteUserFromList}) => {
     const history = useHistory();
     const [roles, setRoles] = useState(user.roles);
 
@@ -59,35 +59,39 @@ const UserBasicInfo = ({user, deleteUserFromList}) => {
     }
 
     return (
-        <div>
-            <p>{user.username} i jego id = {user.id} i role = {roles}</p>
-            {
-                !roles.includes("REDACTOR") &&
-                <Button variant="outline-primary" onClick={() => setShowPromoteModal(true)}>
-                    Promote to redactor
-                </Button>
-            }
-            {
-                roles.includes("REDACTOR") &&
-                <Button variant="outline-secondary" onClick={() => setShowDemoteModal(true)}>
-                    Demote to user
-                </Button>
-            }
-            <Button variant="outline-danger" onClick={() => setShowDeleteModal(true)}>
-                Delete user's account
-            </Button>
-            <CustomModal showModal={showPromoteModal} setShowModal={setShowPromoteModal}
-                         onSuccess={promoteUserToRedactor}
-                         header={"Do you want to promote " + user.username + " to redactor?"}/>
-            <CustomModal showModal={showDemoteModal} setShowModal={setShowDemoteModal}
-                         onSuccess={demoteRedactorToUser}
-                         header={"Do you want to demote " + user.username + " to user?"}/>
-            <CustomModal showModal={showDeleteModal} setShowModal={setShowDeleteModal}
-                         onSuccess={deleteUser}
-                         header={"Do you want to delete " + user.username + " account?"}
-                         body={"This action will be permanent!"}/>
-        </div>
-    )
+            <tr>
+                <td>{index + 1}</td>
+                <td>{user.username}</td>
+                <td>{user.id}</td>
+                <td>{roles.toString()}</td>
+                <td>
+                    {
+                        !roles.includes("REDACTOR") &&
+                        <Button variant="outline-primary" onClick={() => setShowPromoteModal(true)}>
+                            Promote to redactor
+                        </Button>
+                    }
+                    {
+                        roles.includes("REDACTOR") &&
+                        <Button variant="outline-secondary" onClick={() => setShowDemoteModal(true)}>
+                            Demote to user
+                        </Button>
+                    }
+                    <Button variant="outline-danger" onClick={() => setShowDeleteModal(true)}>
+                        Delete user's account
+                    </Button>
+                    <CustomModal showModal={showPromoteModal} setShowModal={setShowPromoteModal}
+                                 onSuccess={promoteUserToRedactor}
+                                 header={"Do you want to promote " + user.username + " to redactor?"}/>
+                    <CustomModal showModal={showDemoteModal} setShowModal={setShowDemoteModal}
+                                 onSuccess={demoteRedactorToUser}
+                                 header={"Do you want to demote " + user.username + " to user?"}/>
+                    <CustomModal showModal={showDeleteModal} setShowModal={setShowDeleteModal}
+                                 onSuccess={deleteUser}
+                                 header={"Do you want to delete " + user.username + " account?"}
+                                 body={"This action will be permanent!"}/>
+                </td>
+            </tr>)
 }
 
 export default UserBasicInfo;
