@@ -8,6 +8,7 @@ import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {toast} from "react-toastify";
 import CustomModal from "../modal/CustomModal";
+import {Container, Col, Row} from "react-bootstrap";
 
 const BlogEntry = ({entryId, entryData, comments, addComment, isFrontpage, location}) => {
     const history = useHistory();
@@ -52,7 +53,7 @@ const BlogEntry = ({entryId, entryData, comments, addComment, isFrontpage, locat
 
     return (
         <>
-            <article className={"text-start px-5 pt-3 pb-3 m-3 bg-info rounded-3"}>
+            <article className={"text-start px-5 pt-3 pb-3 m-3 bg-light rounded-3"}>
                 <header className="mb-4">
 
                     <h1 className="fw-bolder mb-1">{entryData.title}</h1>
@@ -69,26 +70,26 @@ const BlogEntry = ({entryId, entryData, comments, addComment, isFrontpage, locat
                             <BlogObject key={blogObject.positionInBlogEntry} blogObject={blogObject}/>))}
                 </section>
                 <hr/>
-                <div className={"container w-100"}>
-                    <div className={"row"}>
-                        <div className={"col my-auto"}>
+                <Container className={"w-100"}>
+                    <Row>
+                        <Col className={"my-auto"}>
                             {isUser() &&
-                            <button className={"btn btn-dark"} onClick={() => toggleAddComment()}>Comment</button>
+                            <button className={"btn btn-primary mx-1"} onClick={() => toggleAddComment()}>Comment</button>
                             }
                             {isCurrentUserId(entryData.author.id) &&
                             <>
-                                <button className={"btn btn-dark"} onClick={() => editEntry()}>Edit</button>
-                                <button className={"btn btn-danger"} onClick={() => setShowDeleteModal(true)}>Delete</button>
+                                <button className={"btn btn-primary mx-1"} onClick={() => editEntry()}>Edit</button>
+                                <button className={"btn btn-danger mx-1"} onClick={() => setShowDeleteModal(true)}>Delete</button>
                             </>
                             }
-                        </div>
-                        <div className={"col my-auto"}>
+                        </Col>
+                        <Col className={"my-auto"}>
                             <span className={"float-end"}>
                                 <Socials shareUrl={shareUrl}/>
                             </span>
-                        </div>
-                    </div>
-                </div>
+                        </Col>
+                    </Row>
+                </Container>
                 <hr/>
             </article>
             {addCommentBoolean &&
