@@ -4,10 +4,11 @@ import axios from "axios";
 import SmallEntry from "../redactor_entries/SmallEntry";
 import Typography from "@material-ui/core/Typography";
 import Pagination from '@material-ui/lab/Pagination';
+import "./Homepage.css"
 
 const Homepage = () => {
     const [entries, setEntries] = useState([]);
-    const [pageNr, setPageNr] = useState(0);
+    const [pageNr, setPageNr] = useState(1);
     const [pageCount, setPageCount] = useState(10);
     const displayedEntries = 5;
 
@@ -21,7 +22,8 @@ const Homepage = () => {
         ).then((response) => {
             if(response.status === 200) {
                 setEntries(response.data.content)
-                if(pageNr >= pageCount && response.data.content.length === displayedEntries ) {
+                console.log(response.data)
+                if(pageNr >= response.data.totalPages && response.data.content.length === displayedEntries ) {
                     setPageCount(pageNr + 1);
                 }
             }
@@ -42,10 +44,12 @@ const Homepage = () => {
                         <SmallEntry key={entry.createdDate} entry ={entry}/>
                     )}
             </div>
-            <Typography>Page: {pageNr}</Typography>
+            <div>
+            <Typography className={"p-3"}>Page: {pageNr}</Typography>
             <Pagination count={pageCount} page={pageNr} size="large"
                         variant="outlined" shape="rounded"
                         onChange={changePage} color="secondary" />
+            </div>
         </div>
 
     )

@@ -20,7 +20,7 @@ const SmallEntry = ({entry}) => {
             <article className={"text-start px-5 pt-3 pb-3 m-3 bg-light rounded-3"}>
                 <header className="mb-4">
 
-                    <h3 className="fw-bolder mb-1">{entry.title}</h3>
+                    <h3 style={{wordWrap:"break-word"}} className="fw-bolder mb-1">{entry.title}</h3>
 
 
                     <div className="text-muted fst-italic mb-2">Posted on <span
@@ -30,7 +30,8 @@ const SmallEntry = ({entry}) => {
                 </header>
 
                 <hr/>
-                <Button onClick={goToEntryPage}>Go there</Button>
+
+                <a href={"http://localhost:3000/post/" + entry.id}><Button onClick={goToEntryPage}>Read more</Button></a>
             </article>
 
         </>

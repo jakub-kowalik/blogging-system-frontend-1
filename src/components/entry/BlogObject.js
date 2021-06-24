@@ -9,7 +9,7 @@ const BlogObject = ({blogObject}) => {
     }
 
     return (
-        <>
+        <div style={{wordWrap:"break-word"}}>
             {isText() &&
             <p style={{textIndent: "4em", whiteSpace: "pre-wrap"}}>
                 {blogObject.content}
@@ -20,7 +20,7 @@ const BlogObject = ({blogObject}) => {
                 <img className={"w-100 rounded-3"} src={blogObject.content} alt={"pictograph"} />
             </p>
             }
-        </>
+        </div>
     );
 
 };

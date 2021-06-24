@@ -56,7 +56,7 @@ const BlogEntry = ({entryId, entryData, comments, addComment, isFrontpage, locat
             <article className={"text-start px-5 pt-3 pb-3 m-3 bg-light rounded-3"}>
                 <header className="mb-4">
 
-                    <h1 className="fw-bolder mb-1">{entryData.title}</h1>
+                    <h1 style={{wordWrap:"break-word"}} className="fw-bolder mb-1">{entryData.title}</h1>
 
                     <div className="text-muted fst-italic mb-2">Posted on <span
                         title={entryData.createdDate}>{formatDate(entryData.createdDate)}</span> by {entryData.author.username}
