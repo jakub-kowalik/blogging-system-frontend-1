@@ -28,7 +28,7 @@ function Header() {
                     {isAdmin() &&
                     <NavDropdown title="Admin menu" id="basic-nav-dropdown">
                         <NavDropdown.Item href="/admin/users">Users</NavDropdown.Item>
-                        <NavDropdown.Item href="/admin/posts">Blog entries</NavDropdown.Item>
+                        <NavDropdown.Item href="/admin/allentries">Blog entries</NavDropdown.Item>
                     </NavDropdown>
                     }
                     {!isUser() &&

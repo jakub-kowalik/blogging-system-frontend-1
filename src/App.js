@@ -1,17 +1,18 @@
 import './App.css';
 import {Redirect, BrowserRouter as Router, Route } from 'react-router-dom';
-import RegisterPage from "./components/register/RegisterPage";
-import LoginPage from "./components/login/LoginPage";
-import HomePage from "./components/home/HomePage";
+import RegisterPage from "./components/register_page/RegisterPage";
+import LoginPage from "./components/login_page/LoginPage";
+import HomePage from "./components/home_page/HomePage";
 import Header from "./components/header/Header";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import EditBlogEntry from "./components/new_post/EditBlogEntry";
+import EditBlogEntry from "./components/edit_post/EditBlogEntry";
 import BlogEntryPage from "./components/entry/BlogEntryPage";
-import EditBlogEntryPage from "./components/new_post/EditBlogEntryPage";
-import UsersPage from "./components/usersManagement/UsersPage";
-import MyEntriesPage from "./components/redactor_entries/MyEntriesPage";
+import EditBlogEntryPage from "./components/edit_post/EditBlogEntryPage";
+import UsersPage from "./components/users_management/UsersPage";
+import MyEntriesPage from "./components/entries_pages/MyEntriesPage";
 import {Container, Col, Row} from "react-bootstrap";
+import AdminEntriesPage from "./components/entries_pages/AdminEntriesPage";
 
 function App() {
     return (
@@ -35,6 +36,9 @@ function App() {
                             </Route>
                             <Route path={"/admin/users"}>
                                 <UsersPage/>
+                            </Route>
+                            <Route path={"/admin/allentries"}>
+                                <AdminEntriesPage/>
                             </Route>
                             <Route path={"/newblogentry"}>
                                 <EditBlogEntry/>

@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 
 import axios from "axios";
-import SmallEntry from "../redactor_entries/SmallEntry";
+import SmallEntry from "../entries_components/SmallEntry";
 import Typography from "@material-ui/core/Typography";
 import Pagination from '@material-ui/lab/Pagination';
 import "./Homepage.css"
+import DetailedEntry from "../entries_components/DetailedEntry";
 
 const Homepage = () => {
     const [entries, setEntries] = useState([]);
@@ -41,7 +42,7 @@ const Homepage = () => {
         <div>
             <div>
                 {entries.map((entry) =>
-                        <SmallEntry key={entry.createdDate} entry ={entry}/>
+                        <DetailedEntry key={entry.createdDate} entry ={entry}/>
                     )}
             </div>
             <div>

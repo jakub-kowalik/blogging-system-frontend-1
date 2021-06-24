@@ -30,7 +30,6 @@ function LoginForm() {
                     localStorage.setItem("token", response.data['token']);
                     const decoded = jwt(localStorage.getItem('token'));
                     localStorage.setItem("roles", decoded['roles']);
-
                     toast.success("Logged in.")
                     redirectToHome();
                 }

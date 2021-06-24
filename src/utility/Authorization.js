@@ -22,6 +22,12 @@ export const isCurrentUserId = (id) => {
     return currentUserId!==null && currentUserId === id;
 }
 
+
+export const getCurrentUserName = () => {
+    let username = localStorage.getItem('username');
+    return username!==null ? username : 'Guest';
+}
+
 export const updateCurrentUser = () => {
     axios.get(
         'http://localhost:8081/users/currentUserInformation',
@@ -31,6 +37,7 @@ export const updateCurrentUser = () => {
             let roles = response.data.roles.map(role => {
                 return "ROLE_" + role.name;
             })
+            localStorage.setItem("username", response.data.username);
             localStorage.setItem("roles", roles.toString());
             localStorage.setItem("currentUserId", response.data.id);
         } else {

@@ -1,16 +1,16 @@
+import {useHistory} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {handleError} from "../../utility/Authorization";
-import {useHistory} from "react-router-dom";
-import SmallEntry from "./SmallEntry";
+import DetailedEntry from "../entries_components/DetailedEntry";
 
-const MyEntriesPage = () => {
+const AdminEntriesPage = () => {
     const history = useHistory();
     const [entries, setEntries] = useState([]);
 
     useEffect(() => {
         axios.get(
-            'http://localhost:8081/api/blog/redactor/getAllCurrentUserBlogEntries',
+            'http://localhost:8081/api/blog/admin/getAllEntries',
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}}
         ).then((response) => {
             if (response.status === 200) {
@@ -30,10 +30,13 @@ const MyEntriesPage = () => {
                     return new Date(b.createdDate) - new Date(a.createdDate);
                 })
                 .map((entry) =>
-                <SmallEntry key={entry.createdDate} entry ={entry}/>
-            )}
+                    <DetailedEntry key={entry.createdDate} entry ={entry}/>
+                )}
         </>
     )
+
+
+
 }
 
-export default MyEntriesPage;
+export default AdminEntriesPage;
