@@ -17,6 +17,15 @@ const DetailedEntry = ({entry}) => {
         history.push('post/'+ entry.id);
     }
 
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    function formatDate(dateString) {
+        let date = new Date(dateString);
+        return (date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear())
+    }
+
     return (
         <>
             <article className={"text-start px-5 pt-3 pb-3 m-3 bg-light rounded-3"}>
@@ -26,7 +35,7 @@ const DetailedEntry = ({entry}) => {
 
 
                     <div className="text-muted fst-italic mb-2">Posted on <span
-                        title={entry.createdDate}>{entry.createdDate}</span>
+                        title={entry.createdDate}>{formatDate(entry.createdDate)}</span>
                     </div>
                     <div className="text-muted fst-italic mb-2">Posted by <span
                         title={entry.author.username}>{entry.author.username}</span>
