@@ -1,6 +1,6 @@
 import BlogObject from "./BlogObject";
 import Comment from "./Comment";
-import {handleError, isCurrentUserId, isRedactor, isUser} from "../../utility/Authorization";
+import {handleError, isAdmin, isCurrentUserId, isRedactor, isUser} from "../../utility/Authorization";
 import Socials from "./Socials";
 import React, {useState} from "react";
 import AddComment from "./AddComment";
@@ -76,7 +76,7 @@ const BlogEntry = ({entryId, entryData, comments, addComment, isFrontpage, socia
                             {isUser() &&
                             <button className={"btn btn-primary mx-1"} onClick={() => toggleAddComment()}>Comment</button>
                             }
-                            {isCurrentUserId(entryData.author.id) &&
+                            {(isCurrentUserId(entryData.author.id) || isAdmin() )  &&
                             <>
                                 <button className={"btn btn-primary mx-1"} onClick={() => editEntry()}>Edit</button>
                                 <button className={"btn btn-danger mx-1"} onClick={() => setShowDeleteModal(true)}>Delete</button>
