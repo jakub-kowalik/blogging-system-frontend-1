@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {toast} from "react-toastify";
 
 export const isRedactor = () => {
     let roles = localStorage.getItem('roles');
@@ -15,23 +16,54 @@ export const isAdmin = () => {
     return roles!==null && roles.includes("ROLE_ADMIN");
 }
 
-export const updateCurrentUser = ()=>{
+export const isCurrentUserId = (id) => {
+    let currentUserId = localStorage.getItem('currentUserId');
+    console.log(currentUserId);
+    return currentUserId!==null && currentUserId === id;
+}
+
+
+export const getCurrentUserName = () => {
+    let username = localStorage.getItem('username');
+    return username!==null ? username : 'Guest';
+}
+
+export const updateCurrentUser = () => {
     axios.get(
-        'http://localhost:8081/users/currentUserInformation',
+        process.env.REACT_APP_BACKEND_URL + '/users/currentUserInformation',
         { headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}}
     ).then((response) => {
         if(response.status === 200) {
             let roles = response.data.roles.map(role => {
                 return "ROLE_" + role.name;
             })
-            console.log(roles.toString())
+            localStorage.setItem("username", response.data.username);
             localStorage.setItem("roles", roles.toString());
+            localStorage.setItem("currentUserId", response.data.id);
         } else {
+            localStorage.setItem("currentUserId", null);
             localStorage.setItem("roles", null);
         }
 
     }).catch(function (error) {
         console.log("Error updating current user data")
+        console.log(error);
     });
     return localStorage.getItem('token') !== null;
+}
+
+export const handleError = (error, history) => {
+    if (error.response) {
+        if(error.response.status === 401){
+            toast.error("Your session timed out. Try re-logging to your account.");
+            updateCurrentUser();
+            history.push('/home');
+        }
+        else if (error.response.status === 500) {
+            toast.error('Server error');
+        }
+    } else {
+        toast.error('Some error occured');
+        console.log(error);
+    }
 }

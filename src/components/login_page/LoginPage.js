@@ -1,57 +1,49 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import jwt from 'jwt-decode'
-import { withRouter } from "react-router-dom";
+import {withRouter} from "react-router-dom";
+import {toast} from "react-toastify";
 
 
-function LoginForm(props) {
-    const [state , setState] = useState({
-        email : "",
-        password : "",
-        successMessage: null
+function LoginForm() {
+    const [state, setState] = useState({
+        email: "",
+        password: "",
     })
     const handleChange = (e) => {
-        const {id , value} = e.target
+        const {id, value} = e.target
         setState(prevState => ({
             ...prevState,
-            [id] : value
+            [id]: value
         }))
     }
 
     const handleSubmitClick = (e) => {
         e.preventDefault();
-        const payload={
-            "email":state.email,
-            "password":state.password,
+        const payload = {
+            "email": state.email,
+            "password": state.password,
         }
-        axios.post('http://localhost:8081/users/authenticate', payload)
+        axios.post(process.env.REACT_APP_BACKEND_URL + '/users/authenticate', payload)
             .then(function (response) {
-                if(response.status === 200){
-                    setState(prevState => ({
-                        ...prevState,
-                        'successMessage' : 'Login successful. Redirecting to home page..'
-                    }))
+                if (response.status === 200) {
                     localStorage.setItem("token", response.data['token']);
                     const decoded = jwt(localStorage.getItem('token'));
                     localStorage.setItem("roles", decoded['roles']);
+                    toast.success("Logged in.");
                     redirectToHome();
-                    // props.showError(null)
                 }
-
             })
             .catch(function (error) {
-                // props.showError("Invalid credentials");
-                console.log(error);
+                toast.error("Invalid credentials");
             });
     }
     const redirectToHome = () => {
         window.location.replace('/');
     }
-    const redirectToRegister = () => {
-        window.location.replace('/register');
-    }
-    return(
-        <div className="card mt-3 p-3">
+
+    return (
+        <div className="card mt-3 p-3 w-50">
             <form>
                 <div className="form-group text-left">
                     <label htmlFor="exampleInputEmail1">Email address</label>
@@ -77,18 +69,11 @@ function LoginForm(props) {
 
                 <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-primary form-control my-3"
                     onClick={handleSubmitClick}
-                >Submit</button>
+                >Submit
+                </button>
             </form>
-            <div className="registerMessage">
-                <span>Dont have an account? </span>
-                <span className="loginText" onClick={() => redirectToRegister()}>Register</span>
-            </div>
-            <div className="alert alert-success mt-2" style={{display: state.successMessage ? 'block' : 'none' }} role="alert">
-                {state.successMessage}
-            </div>
-
         </div>
     )
 }
