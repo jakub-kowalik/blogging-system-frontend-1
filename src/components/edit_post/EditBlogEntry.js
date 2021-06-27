@@ -129,7 +129,9 @@ const EditBlogEntry = ({blogEntry, entryId}) => {
                            onChange={e => setTitle(e.target.value)}/>
                 </div>
                 <ul className="list-group">
-                    {blogEntryObjects.map((object) =>
+                    {blogEntryObjects
+                        .sort((a, b) => a.positionInBlogEntry > b.positionInBlogEntry ? 1 : -1)
+                        .map((object) =>
                         <EditBlogEntryObject key={object.positionInBlogEntry} onDelete={onDelete}
                                              updateBlogObject={updateBlogObject} blogEntryObject={object}/>
                     )}
