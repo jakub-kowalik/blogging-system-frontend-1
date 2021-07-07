@@ -65,6 +65,11 @@ function App() {
                     </Col>
                 </Row>
             </Container>
+            <footer className="bg-light text-center text-lg-start mt-3">
+                <div className="text-center p-3">
+                    Created by <a href={"https://github.com/KrizzyK"}>Krzysztof Kobyliński</a> and <a href={"http://jakubkowalik.pl"}>Jakub Kowalik</a> source available at <a href={"https://github.com/KrizzyK/blogging-system-frontend"}>frontend-source</a> and <a href={"https://github.com/KrizzyK/blogging-system-backend"}>backend-source</a>
+                </div>
+            </footer>
         </div>
     );
 }
